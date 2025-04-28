@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "../public")));
 
 // Connect to MongoDB
-mongoose.connect(MONGODB_URL, {
+mongoose.connect("mongodb://localhost:27017/paintingApp", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
