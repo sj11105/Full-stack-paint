@@ -13,11 +13,17 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const DB_URI = process.env.DB_URI || "mongodb://localhost:27017/fallbackdb";
+
+mongoose
+  .connect(DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() =>
+    console.log("MongoDB Connected:", DB_URI.replace(/\/\/.*@/, "//****:****@"))
+  )
+  .catch((err) => console.error("MongoDB Connection Error:", err));
 
 // User schema
 const UserSchema = new mongoose.Schema({
